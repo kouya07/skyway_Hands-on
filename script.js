@@ -24,25 +24,6 @@ $(function() {
   peer.on('connection', connect);
   peer.on('error', err => console.log(err));
 
-  // Prepare file drop box.
-  const box = $('#box');
-  box.on('dragenter', doNothing);
-  box.on('dragover', doNothing);
-  box.on('drop', e => {
-    e.originalEvent.preventDefault();
-    const [file] = e.originalEvent.dataTransfer.files;
-    eachActiveRoom((room, $c) => {
-      room.send(file);
-      $c.find('.messages').append('<div><span class="file">You sent a file.</span></div>');
-    });
-  });
-  function doNothing(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  $('#roomName').focus();
-
   // Connect to a room
   $('#connect').on('submit', e => {
     e.preventDefault();
