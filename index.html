@@ -28,8 +28,14 @@
                                                alt="Fork me on GitHub"></a> -->
 
 
-
+<div class="wrapper">
 <div id="map">map用</div>
+
+<div class="center">
+<div class="connection active">
+<div id="chat_test"></div>
+</div>
+</div>
 
 <div id="actions">
   <form id="send">
@@ -38,17 +44,12 @@
   </form>
   <!-- <button id="close">Close selected connections</button> -->
 </div>
-<div class="botui-app-container" id="chat-app">
-  <!-- チャットの表示  -->
-  <bot-ui></bot-ui>
-</div>
-<!-- <div id="chat_test"></div> -->
 
 <div id="wrap"><div id="connections"><span class="filler">You have not yet
         made any connections.</span></div>
   <div class="clear"></div></div>
 
-<div id="margin"></div>
+<!-- <div id="margin"></div> -->
 
 <div id="box" style="background: #fff; font-size: 18px;padding:40px 30px; text-align: center;">
   Drag file here to send to active connections.
@@ -73,51 +74,9 @@
     Currently <strong>Google Chrome</strong> is required.</strong></div>
   <div class="log" style="color:#FF7500;text-shadow:none;padding:15px;background:#eee"><strong>Connection status</strong>:<br></div>
 </div> -->
+</div>
 </body>
 
 <script>
-  // let chat_test = document.getElementById('chat_test');
-  // let text = '';
-  // let message = 'test';
-  // // 自分
-  // text+='<div class="chat-box">';
-  // text+='<div class="chat-face"><img src="/images/chat/my.png" alt="" /></div>';
-  // text+='<div class="chat-area">';
-  // text+='<div class="chat-hukidashi" id = "text">'+message+'</div>';
-  // text+='</div>';
-  // text+='</div>';
-
-  // // 他人
-  // text+='<div class="chat-box2">';
-  // text+='<div class="chat-face2"><img src="/images/chat/someone.png" alt="" /></div>';
-  // text+='<div class="chat-area2">';
-  // text+='<div class="chat-hukidashi2">'+message+'</div>';
-  // text+='</div>';
-  // text+='</div>';
-  
-  // chat_test.innerHTML=text;
-
-  //インスタンスの作成
-var ui = new BotUI('chat-app');
-
-
-//ボット側のチャット処理
-ui.message.bot({
-  
-  //メッセージを表示する
-  content: 'こんにちは、ボットです！'
-  
-}).then(function() {
-
-
-  //ユーザー側のチャット処理
-  ui.message.human({
-    
-    content: 'こんにちは、ユーザーです！'
-    
-  });
-
-
-});
 </script>
 </html>

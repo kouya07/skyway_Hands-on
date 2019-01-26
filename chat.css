@@ -6,15 +6,15 @@
     width: 100%;
     height: auto;
     overflow: hidden; 
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 .chat-face {
     float: left;
     margin-right: -120px;
 }
 .chat-face img{
-　　width: 90px;
-    height: 90px;
+　　width: 60px;
+    height: 60px;
     border-radius: 30px;
     border: 1px solid #ccc;
     box-shadow: 0 0 4px #ddd;
@@ -52,15 +52,15 @@
     width: 100%;
     height: auto;
     overflow: hidden; 
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 .chat-face2 {
     float: right;
     margin-left: -120px;
 }
 .chat-face2 img{
-　　width: 90px;
-    height: 90px;
+　　width: 60px;
+    height: 60px;
     border-radius: 30px;
     border: 1px solid #ccc;
     box-shadow: 0 0 4px #ddd;
@@ -94,6 +94,11 @@
    border-width: 10px 10px 10px 10px;
     border-color: transparent transparent transparent #BCF5A9; 
  }
+
+ .chat-username {
+    float: right;
+}
+
 /*スマホの時は画像を小さく*/
 @media screen and (max-width: 440px){
     /*画像左側のチャット*/
