@@ -79,6 +79,7 @@ $(function() {
       room.send(msg);
       $c.find('.messages').append('<div><span class="you">You: </span>' + msg
         + '</div>');
+      addMessage('you',msg);
     });
     $('#text').val('');
     $('#text').focus();
@@ -152,15 +153,18 @@ $(function() {
           message.src + ' has sent you a <a target="_blank" href="' + url + '">file</a>.</span></div>');
       } else {
         messages.append('<div><span class="peer">' + message.src + '</span>: ' + message.data + '</div>');
+        addMessage(log.message.src,message.data);
       }
     });
 
     room.on('peerJoin', peerId => {
       messages.append('<div><span class="peer">' + peerId + '</span>: has joined the room </div>');
+      addMessage(log.message.src,"入室");
     });
 
     room.on('peerLeave', peerId => {
       messages.append('<div><span class="peer">' + peerId + '</span>: has left the room </div>');
+      addMessage(log.message.src,"退室");
     });
   }
 
