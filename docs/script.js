@@ -5,7 +5,7 @@ $(function() {
   const peer = new Peer({
     // Set API key for cloud server (you don't need this if you're running your
     // own.
-    key:         "9b4cb63a-fbe5-44af-aa8a-1a3ac56abde6",
+    key:         '9b4cb63a-fbe5-44af-aa8a-1a3ac56abde6',
     // Set highest debug level (log everything!).
     debug:       3,
     // Set a logging function:
@@ -15,8 +15,6 @@ $(function() {
     },
   });
   const connectedPeers = {};
-
-  var userName = window.prompt("ユーザー名を入力してください", "");
 
   // Show this peer's ID.
   peer.on('open', id => {
@@ -43,50 +41,29 @@ $(function() {
     e.stopPropagation();
   }
 
-// Connect to a 逃げる人room 
+  $('#roomName').focus();
+
+  // Connect to a room
   $('#connect').on('submit', e => {
-    document.getElementById("actions").style.display="none";
-    document.getElementById("connect").style.display="none";
-    document.getElementById("connect1").style.display="none";
     e.preventDefault();
-    const roomName = "逃げる人";
+    const roomName = $('#roomName').val();
     if (!roomName) {
       return;
     }
     if (!connectedPeers[roomName]) {
       // Create 2 connections, one labelled chat and another labelled file.
-      const room = peer.joinRoom(roomName);
+      const room = peer.joinRoom('sfu_text_' + roomName, {mode: 'sfu'});
       room.on('open', function() {
         connect(room);
         connectedPeers[roomName] = room;
+        getMyPlace(room, null);
       });
     }
   });
-
-  // Connect to a 鬼room 
-  $('#connect1').on('submit', e => {
-    document.getElementById("actions").style.display="none";
-    document.getElementById("connect").style.display="none";
-    document.getElementById("connect1").style.display="none";
-    e.preventDefault();
-    const roomName = "鬼";
-    if (!roomName) {
-      return;
-    }
-    if (!connectedPeers[roomName]) {
-      // Create 2 connections, one labelled chat and another labelled file.
-      const room = peer.joinRoom(roomName);
-      room.on('open', function() {
-        connect(room);
-        connectedPeers[roomName] = room;
-      });
-    }
-  });
-
 
   // Close a connection.
   $('#close').on('click', () => {
-    eachActiveRoom(function(room, $c) {
+    eachActiveRoom((room, $c) => {
       room.close();
       $c.remove();
     });
@@ -99,11 +76,9 @@ $(function() {
     const msg = $('#text').val();
 
     eachActiveRoom((room, $c) => {
-      if(msg != "") {
-      room.send(msg); //メッセージ送信
-      $c.find('.messages').append('<div><span class="you">あなた: </span>' + msg
+      room.send(msg);
+      $c.find('.messages').append('<div><span class="you">You: </span>' + msg
         + '</div>');
-    }
     });
     $('#text').val('');
     $('#text').focus();
@@ -113,7 +88,7 @@ $(function() {
   $('#browsers').text(navigator.userAgent);
 
   // Make sure things clean up properly.
-  window.onunload = window.onbeforeunload = function(e) {
+  window.onunload = window.onbeforeunload = () => {
     if (!!peer && !peer.destroyed) {
       peer.destroy();
     }
@@ -125,8 +100,8 @@ $(function() {
     $('#text').focus();
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);
     const roomName = room.name.replace('sfu_text_', '');
-    const header = $('<h1></h1>').html('部屋名: <strong>' + roomName + '</strong>');
-    const messages = $('<div><em>接続されました</em></div>').addClass('messages');
+    const header = $('<h1></h1>').html('Room: <strong>' + roomName + '</strong>');
+    const messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
     chatbox.append(header);
     chatbox.append(messages);
     // Select connection handler.
@@ -150,19 +125,24 @@ $(function() {
             if (log.message.src === peer.id) {
               break;
             }
-            messages.append('<div><span class="peer">' + log.message.src + '</span>が入室しました</div>');
+            messages.append('<div><span class="peer">' + log.message.src + '</span>: has joined the room </div>');
             break;
           case 'ROOM_USER_LEAVE':
             if (log.message.src === peer.id) {
               break;
             }
-            messages.append('<div><span class="peer">' + log.message.src + '</span>が退室しました</div>');
+            messages.append('<div><span class="peer">' + log.message.src + '</span>: has left the room </div>');
             break;
         }
       }
     });
 
     room.on('data', message => {
+
+      console.log(message.data);
+
+      getMyPlace(room, message.data);
+
       if (message.data instanceof ArrayBuffer) {
         const dataView = new Uint8Array(message.data);
         const dataBlob = new Blob([dataView]);
@@ -175,11 +155,11 @@ $(function() {
     });
 
     room.on('peerJoin', peerId => {
-      messages.append('<div><span class="peer">' + peerId + '</span>が入室しました</div>');
+      messages.append('<div><span class="peer">' + peerId + '</span>: has joined the room </div>');
     });
 
     room.on('peerLeave', peerId => {
-      messages.append('<div><span class="peer">' + peerId + '</span>が退室しました</div>');
+      messages.append('<div><span class="peer">' + peerId + '</span>: has left the room </div>');
     });
   }
 
@@ -196,29 +176,48 @@ $(function() {
       checkedIds[peerId] = 1;
     });
   }
+
 });
 
-function getMyPlace() {
+function getMyPlace(room, location) {
   var output = document.getElementById("result");
   if (!navigator.geolocation){//Geolocation apiがサポートされていない場合
     output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
     return;
   }
+
+  var self = this;
   function success(position) {
     var latitude  = position.coords.latitude;//緯度
     var longitude = position.coords.longitude;//経度
+
+    //room.send("latitude" + latitude);
+    //room.send("longitude" + longitude);
+
+    var location = {
+      lat: latitude,
+      lng: longitude
+    };
+
+    room.send(location);
+
         // 位置情報
     var latlng = new google.maps.LatLng( latitude , longitude ) ;
     // Google Mapsに書き出し
     var map = new google.maps.Map( document.getElementById( 'map' ) , {
         zoom: 18 ,// ズーム値
         center: latlng ,// 中心座標
-    } ) ;
+    } ) ;    
 
     // マーカーの新規出力
     new google.maps.Marker( {
         map: map ,
         position: latlng ,
+    } ) ;
+
+        new google.maps.Marker( {
+        map: map ,
+        position: location ,
     } ) ;
   };
   function error() {
@@ -227,5 +226,3 @@ function getMyPlace() {
   };
   navigator.geolocation.getCurrentPosition(success, error);//成功と失敗を判断
 }
-
-
