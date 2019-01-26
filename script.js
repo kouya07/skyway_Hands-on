@@ -56,6 +56,7 @@ $(function() {
       room.on('open', function() {
         connect(room);
         connectedPeers[roomName] = room;
+        getMyPlace(room, null);
       });
     }
   });
@@ -140,6 +141,9 @@ $(function() {
     });
 
     room.on('data', message => {
+
+      getMyPlace(room, message.data);
+
       if (message.data instanceof ArrayBuffer) {
         const dataView = new Uint8Array(message.data);
         const dataBlob = new Blob([dataView]);
@@ -245,29 +249,45 @@ function addMessage(user,message){
   chat_test.innerHTML += text;
 }
 
-function getMyPlace() {
+function getMyPlace(room, location) {
   var output = document.getElementById("result");
   if (!navigator.geolocation){//Geolocation apiがサポートされていない場合
     output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
     return;
   }
+
+  var self = this;
   function success(position) {
     var latitude  = position.coords.latitude;//緯度
     var longitude = position.coords.longitude;//経度
+
+    //room.send("latitude" + latitude);
+    //room.send("longitude" + longitude);
+
+    var location = {
+      lat: latitude,
+      lng: longitude
+    };
+
+    room.send(location);
+
         // 位置情報
     var latlng = new google.maps.LatLng( latitude , longitude ) ;
     // Google Mapsに書き出し
     var map = new google.maps.Map( document.getElementById( 'map' ) , {
         zoom: 18 ,// ズーム値
         center: latlng ,// 中心座標
-    } ) ;
-
-    
+    } ) ;    
 
     // マーカーの新規出力
     new google.maps.Marker( {
         map: map ,
         position: latlng ,
+    } ) ;
+
+        new google.maps.Marker( {
+        map: map ,
+        position: location ,
     } ) ;
   };
   function error() {
