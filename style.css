@@ -11,8 +11,8 @@ body,html {
 }
 .connection {
   float: left;
-  height: 250px;
-  width: 200px;
+  height: 1000px;
+  width: 95%;
   overflow: scroll;
   background-color: #fff;
   padding: 10px;
@@ -85,6 +85,7 @@ a {
   padding: 10px;
 }
 #actions {
+  width: 100%;
   padding: 10px;
 }
 
@@ -135,4 +136,21 @@ form {
 /* 特に意味はない空白 */
 #margin{
   height: 1000px;
+}
+
+input#text{
+  /* display:inline-block; */
+  width: 70%;
+}
+input#sendButton{
+  /* display:inline-block; */
+  width: 25%;
+}
+
+form#send{
+  width: 100%;
+}
+
+.botui-app-container{
+  width: 100%;
 }
