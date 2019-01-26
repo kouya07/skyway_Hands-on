@@ -180,3 +180,16 @@ form#send{
     font-size: 40px;
   }
 }
+
+.chat_scrollbox {
+  /* float: left; */
+  height: 500px;
+  width: 95%;
+  overflow: scroll;
+  background-color: #fff;
+  padding: 10px;
+  /* margin: 5px;
+   */
+   margin: auto;
+  border: 1px solid #ccc;
+}
