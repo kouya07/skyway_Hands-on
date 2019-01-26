@@ -122,3 +122,17 @@ form {
   color: #F2C777;
   margin-bottom: 10px;
 }
+
+
+#map{
+  color: white;
+  background: #0C6BA1;
+  /* とりあえず適当な高さ */
+  height: 500px;
+  width: 100%;
+}
+
+/* 特に意味はない空白 */
+#margin{
+  height: 1000px;
+}
