@@ -1,0 +1,151 @@
+/***********************************
+チャット風レイアウト
+************************************/
+/*画像左側のチャット*/
+.chat-box {
+    width: 100%;
+    height: auto;
+    overflow: hidden; 
+    /* margin-bottom: 20px; */
+}
+.chat-face {
+    float: left;
+    margin-right: -120px;
+}
+.chat-face img{
+　　width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px #ddd;
+}
+.chat-area {
+    width: 100%;
+    float: right;
+}
+.chat-hukidashi {
+    display: inline-block;
+    padding: 15px 20px;
+    margin-left: 120px;
+    margin-top: 8px;
+    border-radius: 10px;
+    position: relative; 
+    background-color: #D9F0FF; 
+}
+.chat-hukidashi p{
+    margin-bottom: 0px;
+}
+.chat-hukidashi:after {
+    content: "";
+    position: absolute;
+    top: 35px; left: -10px;
+    margin-top: -10px;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #D9F0FF transparent transparent;
+}
+/*画像右側のチャット*/
+.chat-box2{
+    width: 100%;
+    height: auto;
+    overflow: hidden; 
+    /* margin-bottom: 20px; */
+}
+.chat-face2 {
+    float: right;
+    margin-left: -120px;
+}
+.chat-face2 img{
+　　width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px #ddd;
+}
+.chat-area2 {
+    width: 100%;
+    float: left;
+}
+.chat-hukidashi2 {
+    display: inline-block; 
+    padding: 15px 20px;
+    margin-right: 120px;
+    margin-top: 8px;
+    border-radius: 10px;
+    position: relative; 
+    background-color: #BCF5A9; 
+    float: right;
+}
+.chat-hukidashi2 p{
+    margin-bottom: 0px;
+}
+.chat-hukidashi2:after {
+    content: "";
+    position: absolute;
+    top: 35px; right: -20px;
+    margin-top: -10px;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+   border-width: 10px 10px 10px 10px;
+    border-color: transparent transparent transparent #BCF5A9; 
+ }
+
+ .chat-username {
+    float: right;
+}
+
+/*スマホの時は画像を小さく*/
+@media screen and (max-width: 440px){
+    /*画像左側のチャット*/
+    .chat-face {
+        float: left;
+        margin-right: -80px;
+    }
+    .chat-face img{
+         width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 4px #ddd;
+    }
+    .chat-hukidashi {
+        display: inline-block;
+        padding: 10px 10px;
+        margin-left: 80px;
+        margin-top: 0px;
+        border-radius: 10px;
+        position: relative;
+        background-color: #D9F0FF;
+    }
+    /*画像右側のチャット*/
+    .chat-face2 {
+        float: right;
+        margin-left: -80px;
+    }
+    .chat-face2 img{
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 4px #ddd;
+    }
+
+    .chat-hukidashi2 {
+        display: inline-block;
+        padding: 10px 10px;
+        margin-right: 80px;
+        margin-top: 0px;
+        border-radius: 10px;
+        position: relative;
+        background-color: #BCF5A9;
+        float: right;
+    }
+}
+.chat-div {
+    font-size:4em;
+}
