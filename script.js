@@ -143,7 +143,9 @@ $(function() {
 
     room.on('data', message => {
 
+      if(message.data.indexOf('latitude') != -1) {
       getMyPlace(room, message.data);
+    }
 
       if (message.data instanceof ArrayBuffer) {
         const dataView = new Uint8Array(message.data);
