@@ -137,7 +137,7 @@ $(function() {
           message.src + ' has sent you a <a target="_blank" href="' + url + '">file</a>.</span></div>');
       } else {
         messages.append('<div><span class="peer">' + message.src + '</span>: ' + message.data + '</div>');
-        addMessage(log.message.src,message.data);
+        addMessage(message.src,message.data);
       }
     });
 
