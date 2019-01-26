@@ -33,7 +33,7 @@ $(function() {
     }
     if (!connectedPeers[roomName]) {
       // Create 2 connections, one labelled chat and another labelled file.
-      const room = peer.joinRoom('sfu_text_' + roomName, {mode: 'sfu'});
+      var room = peer.joinRoom('sfu_text_' + roomName, {mode: 'sfu'});
       room.on('open', function() {
         connect(room);
         connectedPeers[roomName] = room;
@@ -57,6 +57,7 @@ $(function() {
     const msg = $('#text').val();
 
     eachActiveRoom((room, $c) => {
+      console.log(room);
       room.send(msg);
       $c.find('.messages').append('<div><span class="you">You: </span>' + msg
         + '</div>');
@@ -187,27 +188,27 @@ $(function() {
   //   type: 'html', // this is 'text' by default
   //   content: 'Hello, this is a <b>bold message</b>.'
   // });
-  let chat_test = document.getElementById('chat_test');
-  let text = '';
-  let message = 'test';
-  // 自分
-  text+='<div class="chat-box">';
-  text+='<div class="chat-face"><img src="/images/chat/my.png" alt="" /></div>';
-  text+='<div class="chat-area">';
-  text+='<div class="chat-hukidashi" id = "text">'+message+'</div>';
-  text+='</div>';
-  text+='</div>';
+  // let chat_test = document.getElementById('chat_test');
+  // let text = '';
+  // let message = 'test';
+  // // 自分
+  // text+='<div class="chat-box">';
+  // text+='<div class="chat-face"><img src="/images/chat/my.png" alt="" /></div>';
+  // text+='<div class="chat-area">';
+  // text+='<div class="chat-hukidashi" id = "text">'+message+'</div>';
+  // text+='</div>';
+  // text+='</div>';
 
-  // 他人
-  text+='<div class="chat-box2">';
-  text+='<div class="chat-face2"><img src="/images/chat/someone.png" alt="" /></div>';
-  text+='<div class="chat-area2">';
-  text+='<div class="chat-hukidashi2">'+message+'</div>';
-  text+='</div>';
-  text+='</div>';
+  // // 他人
+  // text+='<div class="chat-box2">';
+  // text+='<div class="chat-face2"><img src="/images/chat/someone.png" alt="" /></div>';
+  // text+='<div class="chat-area2">';
+  // text+='<div class="chat-hukidashi2">'+message+'</div>';
+  // text+='</div>';
+  // text+='</div>';
 
-  chat_test.innerHTML=text;
-  addMessage('aaa',"hello");
+  // chat_test.innerHTML=text;
+  // addMessage('aaa',"hello");
 });
 
 function addMessage(user,message){
@@ -218,7 +219,7 @@ function addMessage(user,message){
     text = '<div class="chat-box">\
       <div class="chat-face"><img src="/images/chat/my.png" alt="" /></div>\
       <div class="chat-area">\
-      <div class="chat-hukidashi" id = "text">'+message+'</div>\
+      <div class="chat-hukidashi" id = "aaa">'+message+'</div>\
       </div>\
       </div>';
   }
