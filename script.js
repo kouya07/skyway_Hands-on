@@ -5,7 +5,7 @@ $(function() {
   const peer = new Peer({
     // Set API key for cloud server (you don't need this if you're running your
     // own.
-    key:         window.__SKYWAY_KEY__,
+    key:         '9b4cb63a-fbe5-44af-aa8a-1a3ac56abde6',
     // Set highest debug level (log everything!).
     debug:       3,
     // Set a logging function:
@@ -171,3 +171,35 @@ $(function() {
     });
   }
 });
+
+function getMyPlace() {
+  var output = document.getElementById("result");
+  if (!navigator.geolocation){//Geolocation apiがサポートされていない場合
+    output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
+    return;
+  }
+  function success(position) {
+    var latitude  = position.coords.latitude;//緯度
+    var longitude = position.coords.longitude;//経度
+        // 位置情報
+    var latlng = new google.maps.LatLng( latitude , longitude ) ;
+    // Google Mapsに書き出し
+    var map = new google.maps.Map( document.getElementById( 'map' ) , {
+        zoom: 18 ,// ズーム値
+        center: latlng ,// 中心座標
+    } ) ;
+
+    
+
+    // マーカーの新規出力
+    new google.maps.Marker( {
+        map: map ,
+        position: latlng ,
+    } ) ;
+  };
+  function error() {
+    //エラーの場合
+    output.innerHTML = "座標位置を取得できません";
+  };
+  navigator.geolocation.getCurrentPosition(success, error);//成功と失敗を判断
+}
