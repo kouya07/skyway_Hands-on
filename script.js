@@ -42,13 +42,46 @@ $(function() {
     }
   });
 
-  // Close a connection.
-  $('#close').on('click', () => {
-    eachActiveRoom((room, $c) => {
-      room.close();
-      $c.remove();
-    });
+  // Connect to a 逃げる人room 
+  $('#connect').on('submit', e => {
+    document.getElementById("actions").style.display="none";
+    document.getElementById("connect").style.display="none";
+    document.getElementById("connect1").style.display="none";
+    e.preventDefault();
+    const roomName = "逃げる人";
+    if (!roomName) {
+      return;
+    }
+    if (!connectedPeers[roomName]) {
+      // Create 2 connections, one labelled chat and another labelled file.
+      const room = peer.joinRoom(roomName);
+      room.on('open', function() {
+        connect(room);
+        connectedPeers[roomName] = room;
+      });
+    }
   });
+
+  // Connect to a 鬼room 
+  $('#connect1').on('submit', e => {
+    document.getElementById("actions").style.display="none";
+    document.getElementById("connect").style.display="none";
+    document.getElementById("connect1").style.display="none";
+    e.preventDefault();
+    const roomName = "鬼";
+    if (!roomName) {
+      return;
+    }
+    if (!connectedPeers[roomName]) {
+      // Create 2 connections, one labelled chat and another labelled file.
+      const room = peer.joinRoom(roomName);
+      room.on('open', function() {
+        connect(room);
+        connectedPeers[roomName] = room;
+      });
+    }
+  });
+
 
   // Send a chat message to all active connections.
   $('#send').on('submit', e => {
